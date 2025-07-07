@@ -1,41 +1,44 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Node modules
+/node_modules/
 
-# dependencies
-/node_modules
+# Yarn Plug’n’Play
 /.pnp
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
 
-# testing
-/coverage
-
-# next.js
+# Next.js build output
 /.next/
 /out/
 
-# production
-/build
+# Production build folder (if you use it)
+/build/
 
-# misc
-.DS_Store
-*.pem
+# Convex codegen (regenerated on install or codegen step)
+convex/_generated/
 
-# debug
+# Local environment files (don’t ignore .env.example)
+/.env.local
+.env.*.local
+
+# Vercel CLI files
+.vercel/
+
+# Typescript incremental build info
+*.tsbuildinfo
+
+# Next.js generated types
+next-env.d.ts
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
+pnpm-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# Coverage folders
+/coverage/
 
-# vercel
-.vercel
+# macOS Finder files
+.DS_Store
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# SSL certificates, keys, etc.
+*.pem
