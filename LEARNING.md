@@ -1,0 +1,11 @@
+Learning Reflection:
+During this project, I ran into a few problems that taught me more about both Next.js and Convex. At first, VS Code kept underlining my @/components and @convex/_generated imports in red. It turned out I needed to configure the same path aliases in both next.config.js (Webpack’s resolve.alias) and in tsconfig.json (paths). Once I aligned those, the TypeScript errors disappeared and my imports resolved correctly.
+
+Another problem I ran into was getting Tailwind to play nicely with PostCSS. I saw warnings telling me to install @tailwindcss/postcss, so I added that package and updated my postcss.config.js. After that change, the directives @tailwind base, @tailwind components, and @tailwind utilities worked as expected and my styles applied without warnings.
+
+Handling image upload with Convex storage took some experimentation. My final approach was to call api.recipes.generateUploadUrl() on the client to get both a signed URL and a storage ID. I then did a fetch( ..., { method: "PUT", body: file }) to upload the file, and passed the returned id into my create-mutation. On the server side, my list query checks for an imageRef and uses ctx.storage.getUrl(id) so I can display the image in each recipe card. That flow—from signed URL to Convex upload to signed read URL—really cemented how Convex file storage works.
+
+I also got comfortable with Convex’s React hooks. After reading the docs and seeing a few real world implementations about how it automatically re-runs when I push a mutation, I learned how to work with useQuery. Similar approach for useMutation.
+
+Time spent:
+Overall, I spent about 10 hours building this app. The first few hours were about reading Convex docs/actual implementations and understanding concepts. Then I spent an hour or so working through most CRUD handlers. And then I spent another 2 or 3 hours on the front end components and stylings. Followed by a testing session for about an hour to make sure all features works. Took me quite a while to get the image uploading and display working. Writing docs and deploying it on Vercel took me another hour at the end.
