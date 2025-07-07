@@ -8,6 +8,6 @@ export default defineSchema({
     instructions: v.string(),
     createdAt: v.number(),
     rating: v.number(), 
-    imageRef: v.optional(v.id("_storage")),
+    imageRef: v.optional(v.id("_storage")), // Recipe can have no image
   }),
 });

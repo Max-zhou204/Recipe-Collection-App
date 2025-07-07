@@ -24,14 +24,23 @@ export const create = mutation({
   }
 });
 
-// Display a recipe
+// Fetch recipes
 export const list = query({
   handler: async (ctx) => {
-    return await ctx.db
+    const recs = await ctx.db
       .query("recipes")
       .order("desc")
       .collect();
-  }
+
+    return Promise.all(
+      recs.map(async (r) => ({
+        ...r,
+        imageUrl: r.imageRef // If imageRef exists, ask for a signed URL
+          ? await ctx.storage.getUrl(r.imageRef)
+          : null,
+      }))
+    );
+  },
 });
 
 // Update a recipe
@@ -42,7 +51,7 @@ export const update = mutation({
     ingredients: v.array(v.string()),
     instructions: v.string(),
     rating: v.number(),
-    imageRef: v.optional(v.id("_storage")), // Consider not allowing image mutation
+    imageRef: v.optional(v.id("_storage")),
   },
   handler: async (ctx, args) => {
     await ctx.db.patch(args.id, {
@@ -55,7 +64,6 @@ export const update = mutation({
   }
 });
 
-
 // Delete a recipe
 export const remove = mutation({
   args: { id: v.id("recipes") },
@@ -64,8 +72,10 @@ export const remove = mutation({
   }
 });
 
-
-// Todo: Handle image upload
-
-
-// Todo: Generate upload URL for images
+// Generate upload URL for images
+export const generateUploadUrl = mutation({
+  handler: async (ctx) => {
+    const uploadUrl = await ctx.storage.generateUploadUrl();
+    return uploadUrl; 
+  },
+});
