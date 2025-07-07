@@ -10,7 +10,7 @@ interface Recipe {
   ingredients: string[];
   instructions: string;
   rating: number;
-  imageURL?: string | null;
+  imageUrl?: string | null; 
 }
 
 export default function RecipeCard({
@@ -58,9 +58,9 @@ export default function RecipeCard({
 
   return (
     <div className="bg-white rounded-lg shadow-md border p-4 w-full max-w-xs">
-      {recipe.imageURL && (
+      {recipe.imageUrl && (
         <img
-          src={recipe.imageURL}
+          src={recipe.imageUrl}
           alt={recipe.title}
           className="w-full h-36 object-cover rounded mb-3"
         />
